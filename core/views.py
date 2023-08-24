@@ -10,6 +10,7 @@ import stripe
 from django.views.generic.base import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.contrib.auth.forms import UserCreationForm
 
 
 def index(request):
@@ -18,7 +19,7 @@ def index(request):
         if order:
             total = len(order[0].items.all())
             return render(request, "index.html", {"cart":total})
-        
+
     return render(request, "index.html")
 
 def classes(request):
@@ -38,6 +39,10 @@ def profile(request):
     return render(request, "profile.html", {"profile":user})
 
 def editprofile(request):
+    instance = get_object_or_404(User, username=request.user)
+
+    if request.method == "POST":
+        form = ProfileForm(request.POST, instance=instance)
     profile = request.user.profile
 
     if request.method == 'POST':
@@ -57,7 +62,7 @@ def editprofile(request):
     return render(request, 'editprofile.html', context)
 
 
-def subscribe(request): 
+def subscribe(request):
     return render(request, "subscribe.html")
 
 @login_required(login_url='/authentication/login/')
@@ -165,13 +170,13 @@ def products(request):
 @login_required(login_url='/authentication/login/')
 def cart(request):
     order = Order.objects.filter(user=request.user, ordered= False)
-    
+
     if order:
         return render(request, "cart.html", {"order":order[0]})
     else:
         return render(request, "cart.html")
 
-    
+
 
 @login_required(login_url='/authentication/login/')
 def add_to_cart(request, choice):
@@ -185,7 +190,7 @@ def add_to_cart(request, choice):
     order_qs = Order.objects.filter(user=request.user, ordered= False)
     if order_qs.exists() :
         order = order_qs[0]
-        
+
         if order.items.filter(item__pk = item.pk).exists() :
             order_item.quantity += 1
             order_item.save()
@@ -233,3 +238,23 @@ def order_checkout(request, id):
             return JsonResponse({'sessionId': checkout_session['id']})
         except Exception as e:
             return JsonResponse({'error': str(e)})
+
+@login_required(login_url='/authentication/login/')
+def users(request):
+    items = User.objects.all()
+    return render(request, "allusers.html", {"items":items})
+
+
+@login_required(login_url='/authentication/login/')
+def add_user(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'User has been added successfully.')
+            return redirect('all-users')
+    else:
+        form = UserCreationForm()
+
+    context = {'form': form}
+    return render(request, 'add_user.html', context)

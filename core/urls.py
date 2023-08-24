@@ -14,6 +14,8 @@ urlpatterns = [
     path('success/<str:session_id>', views.success), # new
     path('cancelled/', views.canceled), # new
     path('products/', views.products, name="products"),
+    path('all-users/', views.users, name="all-users"),
+    path('add-user/', views.add_user, name='add-user'),
     path('cart/', views.cart, name="cart"),
     path('add-to-cart/<int:choice>/', views.add_to_cart, name="add-to-cart"),
     path('order_checkout/<int:id>/', views.order_checkout, name="order_checkout"),

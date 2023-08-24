@@ -1,0 +1,47 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="container-fluid page-header mb-5">
+    <div class="d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5" style="min-height: 100px">
+        <h4 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase font-weight-bold">All Users</h4>
+    </div>
+</div>
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-md-12 text-right">
+            <a href="{% url 'add-user' %}" class="btn btn-primary">Add New User</a>
+        </div>
+    </div>
+    {% for message in messages %}
+    <div class="alert alert-danger" role="alert">{{ message }}</div>
+    {% endfor %}
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Profile Image</th>
+                    <th>Country</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %} {% if not item.is_superuser %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.username }}</td>
+                    <td>{{ item.email }}</td>
+                    <td>{{ item.phone }}</td>
+                    <td>
+                        {% if item.profile_image %}
+                        <img src="{{ item.profile_image.url }}" class="rounded-circle" width="50px"> {% else %}
+                        <img src="{% static 'C:\Users\INF-0005\Desktop\gym\static\img\carousel-1.jpg' %}" class="rounded-circle" width="75px"> {% endif %}
+                    </td>
+                    <td>{{ item.country }}</td>
+                </tr>
+                {% endif %} {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
