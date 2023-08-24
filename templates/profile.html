@@ -21,16 +21,21 @@
             <td>{{profile.user.username}}</td>
         </tr>
         <tr>
-            <td>First Name</td>
-            <td>{{profile.user.first_name}}</td>
+            <td>Profile pic</td>
+            <td>
+                {% if profile.profile_pic %}
+                <img src="{{ user.profile.profile_pic.url }}"  style="height: 60px; width: 60px; border-radius: 50px;">
+                {% else %}
+                    No profile picture available.
+                {% endif %}
+            </td>
+        <tr>
+            <td>Stuio/Gym Type</td>
+            <td>{{profile.studio_type}}</td>
         </tr>
         <tr>
-            <td>Last Name</td>
-            <td>{{profile.user.last_name}}</td>
-        </tr>
-        <tr>
-            <td>Email</td>
-            <td>{{profile.user.email}}</td>
+            <td>Country</td>
+            <td>{{profile.country}}</td>
         </tr>
         <tr>
             <td>Subscription</td>

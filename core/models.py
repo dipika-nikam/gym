@@ -3,6 +3,20 @@ from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 
+country=[
+     ('India', 'India'),
+     ('India', 'India'),
+     ('India', 'India'),
+     ('India', 'India'),
+]
+
+studio_type = [
+     ('Yoga', 'Yoga'),
+     ('Yoga', 'Yoga'),
+     ('Yoga', 'Yoga'),
+     ('Yoga', 'Yoga'),
+     ('Yoga', 'Yoga'),
+]
 class Profile(models.Model):
     subs = [
         ("all", "All round fitness"),
@@ -10,9 +24,13 @@ class Profile(models.Model):
         ("muscle_building", "Muscle Building")
     ]
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    profile_pic = models.ImageField(upload_to="media/", blank=True, null=True)
+    phone_no = models.CharField(max_length=15)
+    country = models.CharField(max_length=200, choices=country, null=True, blank=True)
+    studio_type = models.CharField(max_length=200, choices=studio_type, null=True, blank=True)
     is_subscribed = models.BooleanField(default=False)
     subscribed_type = models.CharField(max_length=50, choices=subs, null=True, blank=True)
-    checkout_session =models.CharField(max_length=200, null=True, blank=True)
+    checkout_session = models.CharField(max_length=200, null=True, blank=True)
     payment_id = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):

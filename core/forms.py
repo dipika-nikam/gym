@@ -1,6 +1,7 @@
 from django import forms
 from core.models import Contact
 from django.contrib.auth.models import User
+from .models import Profile
 
 class ContactForm(forms.ModelForm):
     class Meta:
@@ -9,5 +10,5 @@ class ContactForm(forms.ModelForm):
 
 class ProfileForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = ['first_name', 'last_name', 'email']
+        model = Profile
+        fields = ['user','profile_pic','phone_no', 'country','studio_type','subscribed_type']

@@ -38,18 +38,26 @@ def profile(request):
     return render(request, "profile.html", {"profile":user})
 
 def editprofile(request):
-    instance = get_object_or_404(User, username=request.user)
-    
-    if request.method == "POST":
-        form = ProfileForm(request.POST, instance=instance)
-        if form.is_valid():
-            form.save()
-        return redirect("profile")
-    else:
-        form = ProfileForm(instance=instance)
-        return render(request, "editprofile.html", {"form":form})
+    profile = request.user.profile
 
-def subscribe(request):
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            img = form.data.get('profile_pic')
+            form = form.save()
+            form.profile_pic = img
+            form.save()
+            return redirect('profile')
+    else:
+        form = ProfileForm(instance=profile)
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'editprofile.html', context)
+
+
+def subscribe(request): 
     return render(request, "subscribe.html")
 
 @login_required(login_url='/authentication/login/')
