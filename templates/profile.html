@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<!-- Page Header Start -->
+<div class="container-fluid page-header mb-5">
+    <div class="d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5" style="min-height: 100px">
+        <h4 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase font-weight-bold">Profile</h4>
+    </div>
+</div>
+<!-- Page Header End -->
+<div class="container">
+    <div class="d-flex justify-content-between p-2 bd-highlight">
+        <h2>Profile</h2>
+        <a href="{% url 'editprofile' %}"><button class="btn btn-primary">Edit Profile</button></a>
+    </div>
+    
+    
+    <table class="table">
+        <tr>
+            <td>Username</td>
+            <td>{{profile.user.username}}</td>
+        </tr>
+        <tr>
+            <td>First Name</td>
+            <td>{{profile.user.first_name}}</td>
+        </tr>
+        <tr>
+            <td>Last Name</td>
+            <td>{{profile.user.last_name}}</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{profile.user.email}}</td>
+        </tr>
+        <tr>
+            <td>Subscription</td>
+            <td>{{profile.is_subscribed}}</td>
+        </tr>
+        <tr>
+            <td>Subscription type</td>
+            <td>{{profile.get_subscribed_type_display}}</td>
+        </tr>
+    </table>
+</div>
+{% endblock %}

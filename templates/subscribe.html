@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<!-- Page Header Start -->
+<div class="container-fluid page-header mb-5">
+    <div class="d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5" style="min-height: 400px">
+        <h4 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase font-weight-bold">Subscribe</h4>
+    </div>
+</div>
+<!-- Page Header End -->
+<div class="container">
+    {% for message in messages%}
+    <div class="alert alert-danger" role="alert">{{message}}</div>
+    {% endfor%}
+    <div class="card-deck mb-3 text-center">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">Muscle Building</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title pricing-card-title">$20 <small class="text-muted">/ mo</small></h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                    <li>Cardio Classes</li>
+                    <li>Crossfit Classes</li>
+                    <li>Video Instructions</li>
+                    <li>Help center access</li>
+                </ul>
+                <a href="{% url 'payment' choice='muscle_building' %}"><button type="button" class="btn btn-lg btn-block btn-primary">Subscribe</button></a>
+                
+            </div>
+        </div>
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">Body Building</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title pricing-card-title">$25 <small class="text-muted">/ mo</small></h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                    <li>Powerlifting Classes</li>
+                    <li>Crossfit Classes</li>
+                    <li>Video Instructions</li>
+                    <li>Help center access</li>
+                </ul>
+                <a href="{% url 'payment' choice='body_building' %}"><button type="button" class="btn btn-lg btn-block btn-primary">Subscribe</button></a>            </div>
+        </div>
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">All round fitness</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title pricing-card-title">$30 <small class="text-muted">/ mo</small></h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                    <li>Cardio Classes</li>
+                    <li>Crossfit Classes</li>
+                    <li>Powerlifting Classes</li>
+                    <li>Video Instructions</li>
+                </ul>
+                <a href="{% url 'payment' choice='all' %}"><button type="button" class="btn btn-lg btn-block btn-primary">Subscribe</button></a>            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
