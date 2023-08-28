@@ -15,8 +15,10 @@
                 <a href="{% url 'products' %}" class="nav-item nav-link">Merchandise</a> {% if user.is_authenticated %} {% if user.is_superuser %}
                 <a href="{% url 'all-users' %}" class="nav-item nav-link">All Users</a> {% endif %}
 
-                <a href="{% url 'profile' %}" class="nav-item nav-link">Profile</a> {% if cart %}
-                <a href="{% url 'cart' %}" class="nav-item nav-link">Cart<span class="badge badge-light badge-pill">{{ cart }}</span></a> {% endif %}
+                <a href="{% url 'profile' %}" class="nav-item nav-link">Profile</a> 
+                {% if cart %}
+                <a href="{% url 'cart' %}" class="nav-item nav-link">Cart<span class="badge badge-light badge-pill">{{ cart }}</span></a> 
+                {% endif %}
 
                 <a href="{% url 'logout' %}" class="nav-item nav-link">Logout</a> {% else %}
                 <a href="{% url 'login' %}" class="nav-item nav-link">Login</a>

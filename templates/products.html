@@ -1,4 +1,6 @@
-{% extends "base.html" %} {% load static %} {% block content %}
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
 
 <!-- Page Header Start -->
 <div class="container-fluid page-header mb-5">
@@ -10,36 +12,34 @@
 <div class="container">
     <div class="d-flex justify-content-between p-2 bd-highlight">
         <h2>Product</h2>
-        <a href="{% url 'editprofile' %}"><button class="btn btn-primary">Add Product</button></a>
+        <a href="{% url 'add_product' %}"><button class="btn btn-primary">Add Product</button></a>
     </div>
     {% for message in messages%}
     <div class="alert alert-danger" role="alert">{{message}}</div>
-    {% endfor%}
-    <form method="post" enctype="multipart/form-data">
-        <div class="row">
-            {% for item in items %}
-            
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <img src="{{item.image.url}}" alt="" height="400px" width="auto">
-
-                    <div class="card-body">
-                        <p class="card-text">{{item.name}}</p>
-                        <p class="card-text">{{item.description|truncatechars:50}}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <a href="{% url 'add-to-cart' choice=item.id %}">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
-                                </a>
-                            </div>
-                            <p class="font-weight-bolder">${{item.price}}</p>
+    {% endfor %}
+    <div class="row">
+        {% for item in items %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <img src="{{ item.image.url }}" alt="" height="400px" width="auto">
+                <div class="card-body">
+                    <p class="card-text">{{ item.name }}</p>
+                    <p class="card-text">{{ item.description|truncatechars:50 }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a href="{% url 'add-to-cart' choice=item.id %}">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                            </a>
+                            <a href="{% url 'delete_product' item.id %}" style="margin-left: 5px;" >
+                                <button type="button" class="btn btn-sm btn-outline-danger">Delete</button>
+                            </a>
                         </div>
+                        <p class="font-weight-bolder">${{ item.price }}</p>
                     </div>
                 </div>
             </div>
-            {% endfor %}
-
         </div>
-    </form>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}

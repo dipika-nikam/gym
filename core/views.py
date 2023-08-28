@@ -11,6 +11,7 @@ from django.views.generic.base import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.contrib.auth.forms import UserCreationForm
+from .forms import ProductForm
 
 
 def index(request):
@@ -167,6 +168,26 @@ def products(request):
     items = Product.objects.all()
     return render(request, "products.html", {"items":items})
 
+def add_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('products')
+    else:
+        form = ProductForm()
+    
+    context = {
+        'form': form,
+    }
+    return render(request, 'add_product.html', context)
+
+
+def delete_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    product.delete()
+    return redirect('products')
+
 @login_required(login_url='/authentication/login/')
 def cart(request):
     order = Order.objects.filter(user=request.user, ordered= False)
@@ -256,3 +277,16 @@ def add_user(request):
 
     context = {'form': form}
     return render(request, 'add_user.html', context)
+
+
+def update_quantity(request, item_id, new_quantity):
+    item = get_object_or_404(OrderItem, id=item_id)
+    item.quantity = new_quantity
+    item.save()
+    return JsonResponse({'message': 'Quantity updated successfully'})
+
+
+def remove_product(request, item_id):
+    item = get_object_or_404(OrderItem, id=item_id)
+    item.delete()
+    return JsonResponse({'message': 'Product removed from cart'})
