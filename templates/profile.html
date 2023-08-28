@@ -14,38 +14,39 @@
         <a href="{% url 'editprofile' %}"><button class="btn btn-primary">Edit Profile</button></a>
     </div>
     
-    
-    <table class="table">
-        <tr>
-            <td>Username</td>
-            <td>{{profile.user.username}}</td>
-        </tr>
-        <tr>
-            <td>Profile pic</td>
-            <h1>{{profile.user.profile_pic}}</h1>
-            <td>
-                {% if profile.profile_pic %}
-                <img src="{{profile.profile_pic.url}}"  style="height: 60px; width: 60px; border-radius: 50px;">
-                {% else %}
-                    No profile picture available.
-                {% endif %}
-            </td>
-        <tr>
-            <td>Stuio/Gym Type</td>
-            <td>{{profile.studio_type}}</td>
-        </tr>
-        <tr>
-            <td>Country</td>
-            <td>{{profile.country}}</td>
-        </tr>
-        <tr>
-            <td>Subscription</td>
-            <td>{{profile.is_subscribed}}</td>
-        </tr>
-        <tr>
-            <td>Subscription type</td>
-            <td>{{profile.get_subscribed_type_display}}</td>
-        </tr>
-    </table>
+    <form method="post" enctype="multipart/form-data">
+        <table class="table">
+            <tr>
+                <td>Username</td>
+                <td>{{profile.user.username}}</td>
+            </tr>
+            <tr>
+                <td>Profile pic</td>
+                <h1>{{profile.user.profile_pic}}</h1>
+                <td>
+                    {% if profile.profile_pic %}
+                    <img src="{{profile.profile_pic.url}}"  style="height: 60px; width: 60px; border-radius: 50px;">
+                    {% else %}
+                        No profile picture available.
+                    {% endif %}
+                </td>
+            <tr>
+                <td>Stuio/Gym Type</td>
+                <td>{{profile.studio_type}}</td>
+            </tr>
+            <tr>
+                <td>Country</td>
+                <td>{{profile.country}}</td>
+            </tr>
+            <tr>
+                <td>Subscription</td>
+                <td>{{profile.is_subscribed}}</td>
+            </tr>
+            <tr>
+                <td>Subscription type</td>
+                <td>{{profile.get_subscribed_type_display}}</td>
+            </tr>
+        </table>
+    </form>
 </div>
 {% endblock %}

@@ -24,7 +24,7 @@ class Profile(models.Model):
         ("muscle_building", "Muscle Building")
     ]
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    profile_pic = models.ImageField(blank=True, null=True, upload_to='media/')
+    profile_pic = models.ImageField(blank=True, null=True, upload_to='images/')
     phone_no = models.CharField(max_length=15)
     country = models.CharField(max_length=200, choices=country, null=True, blank=True)
     studio_type = models.CharField(max_length=200, choices=studio_type, null=True, blank=True)

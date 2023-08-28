@@ -36,23 +36,24 @@ def contact(request):
 
 def profile(request):
     user = get_object_or_404(Profile, user=request.user)
+    print(user)
     return render(request, "profile.html", {"profile":user})
 
 def editprofile(request):
-    instance = get_object_or_404(User, username=request.user)
-
-    if request.method == "POST":
-        form = ProfileForm(request.POST, instance=instance)
-    profile = request.user.profile
-
+    try:
+        profile = Profile.objects.get(user=request.user)
+    except Profile.DoesNotExist:
+        profile = None
+    
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
-            img = form.data.get('profile_pic')
-            form = form.save()
-            form.profile_pic = img
-            form.save()
+            profile = form.save(commit=False)
+            profile.user = request.user
+            profile.save()
             return redirect('profile')
+        else:
+            print(form.errors)
     else:
         form = ProfileForm(instance=profile)
 
@@ -164,7 +165,6 @@ def canceled(request):
 
 def products(request):
     items = Product.objects.all()
-
     return render(request, "products.html", {"items":items})
 
 @login_required(login_url='/authentication/login/')
@@ -206,8 +206,6 @@ def add_to_cart(request, choice):
         order.items.add(order_item)
         messages.info(request, "Item added to your cart")
         return redirect("cart")
-
-    return redirect("cart")
 
 @csrf_exempt
 def order_checkout(request, id):
