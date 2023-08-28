@@ -22,9 +22,10 @@
         </tr>
         <tr>
             <td>Profile pic</td>
+            <h1>{{profile.user.profile_pic}}</h1>
             <td>
                 {% if profile.profile_pic %}
-                <img src="{{ user.profile.profile_pic.url }}"  style="height: 60px; width: 60px; border-radius: 50px;">
+                <img src="{{profile.profile_pic.url}}"  style="height: 60px; width: 60px; border-radius: 50px;">
                 {% else %}
                     No profile picture available.
                 {% endif %}
