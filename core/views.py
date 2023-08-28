@@ -37,7 +37,6 @@ def contact(request):
 
 def profile(request):
     user = get_object_or_404(Profile, user=request.user)
-    print(user)
     return render(request, "profile.html", {"profile":user})
 
 def editprofile(request):
@@ -45,7 +44,7 @@ def editprofile(request):
         profile = Profile.objects.get(user=request.user)
     except Profile.DoesNotExist:
         profile = None
-    
+
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():

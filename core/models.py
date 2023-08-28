@@ -104,3 +104,26 @@ class Order(models.Model):
         for order_item in self.items.all():
             total += order_item.get_total_item_price()
         return total
+
+
+class ClassTimeTable(models.Model):
+    DAYS = (
+        ('MONDAY','MONDAY'),
+        ('TUESDAY','TUESDAY'),
+        ('WEDNESDAY','WEDNESDAY'),
+        ('THURSDAY','THURSDAY'),
+        ('FRIDAY','FRIDAY'),
+        ('SATURDAY','SATURDAY'),
+        ('SUNDAY','SUNDAY'),
+    )
+    TIME = (
+         ('6.00AM - 8.00AM', '6.00AM - 8.00AM'),
+         ('10.00AM - 12.00AM', '10.00AM - 12.00AM'),
+         ('5.00PM - 7.00PM', '5.00PM - 7.00PM'),
+         ('7.00PM - 9.00PM', '7.00PM - 9.00PM'),
+    )
+    days = models.CharField(choices=DAYS, max_length=50)
+    time = models.CharField(choices=TIME, max_length=50)
+
+
+
