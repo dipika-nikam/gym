@@ -187,6 +187,22 @@ def delete_product(request, product_id):
     product.delete()
     return redirect('products')
 
+def update_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('products')
+    else:
+        form = ProductForm(instance=product)
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'update_product.html', context)
+
 @login_required(login_url='/authentication/login/')
 def cart(request):
     order = Order.objects.filter(user=request.user, ordered= False)

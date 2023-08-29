@@ -14,8 +14,8 @@
         <h2>Product</h2>
         <a href="{% url 'add_product' %}"><button class="btn btn-primary">Add Product</button></a>
     </div>
-    {% for message in messages%}
-    <div class="alert alert-danger" role="alert">{{message}}</div>
+    {% for message in messages %}
+    <div class="alert alert-danger" role="alert">{{ message }}</div>
     {% endfor %}
     <div class="row">
         {% for item in items %}
@@ -30,7 +30,10 @@
                             <a href="{% url 'add-to-cart' choice=item.id %}">
                                 <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
                             </a>
-                            <a href="{% url 'delete_product' item.id %}" style="margin-left: 5px;" >
+                            <a href="{% url 'update_product' item.id %}" style="margin-left: 5px;">
+                                <button type="button" class="btn btn-sm btn-outline-info ">Update</button>
+                            </a>
+                            <a href="{% url 'delete_product' item.id %}" style="margin-left: 5px;">
                                 <button type="button" class="btn btn-sm btn-outline-danger">Delete</button>
                             </a>
                         </div>
