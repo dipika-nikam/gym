@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
-from . models import Profile, Product, Order, OrderItem
+from . models import Profile, Product, Order, OrderItem, ClassSchedule
 from django.contrib.auth.models import User
 from core.forms import ContactForm, ProfileForm
 from django.contrib import messages
@@ -23,8 +23,12 @@ def index(request):
 
     return render(request, "index.html")
 
+# def classes(request):
+#     return render(request, "class.html")
+
 def classes(request):
-    return render(request, "class.html")
+    class_schedules = ClassSchedule.objects.all()
+    return render(request, 'class.html', {'class_schedules': class_schedules})
 
 def contact(request):
     if request.method =="POST":
@@ -175,7 +179,7 @@ def add_product(request):
             return redirect('products')
     else:
         form = ProductForm()
-    
+
     context = {
         'form': form,
     }

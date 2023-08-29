@@ -287,81 +287,42 @@
                 </div>
             </div>
             <div id="class-powerlifting" class="container tab-pane fade p-0">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-lg m-0">
-                        <thead class="bg-secondary text-white text-center">
-                            <tr>
-                                <th>Time</th>
-                                <th>Monday</th>
-                                <th>Tuesday</th>
-                                <th>Wednesday</th>
-                                <th>Thursday</th>
-                                <th>Friday</th>
-                                <th>Saturday</th>
-                                <th>Sunday</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center">
-                            <tr>
-                                <th class="bg-secondary text-white align-middle">6.00am - 8.00am</th>
-                                <td>
-                                    <h5>Cardio</h5>John Deo</td>
-                                <td></td>
-                                <td>
-                                    <h5>Crossfit</h5>Adam Phillips</td>
-                                <td></td>
-                                <td class="bg-primary text-white">
-                                    <h5 class="text-white">Power Lifting</h5>James Alien</td>
-                                <td></td>
-                                <td>
-                                    <h5>Cardio</h5>John Deo</td>
-                            </tr>
-                            <tr>
-                                <th class="bg-secondary text-white align-middle">10.00am - 12.00am</th>
-                                <td></td>
-                                <td class="bg-primary text-white">
-                                    <h5 class="text-white">Power Lifting</h5>James Alien</td>
-                                <td></td>
-                                <td>
-                                    <h5>Cardio</h5>John Deo</td>
-                                <td></td>
-                                <td>
-                                    <h5>Crossfit</h5>Adam Phillips</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <th class="bg-secondary text-white align-middle">5.00pm - 7.00pm</th>
-                                <td>
-                                    <h5>Crossfit</h5>Adam Phillips</td>
-                                <td></td>
-                                <td class="bg-primary text-white">
-                                    <h5 class="text-white">Power Lifting</h5>James Alien</td>
-                                <td></td>
-                                <td>
-                                    <h5>Cardio</h5>John Deo</td>
-                                <td></td>
-                                <td>
-                                    <h5>Crossfit</h5>Adam Phillips</td>
-                            </tr>
-                            <tr>
-                                <th class="bg-secondary text-white align-middle">7.00pm - 9.00pm</th>
-                                <td></td>
-                                <td>
-                                    <h5>Cardio</h5>John Deo</td>
-                                <td></td>
-                                <td>
-                                    <h5>Crossfit</h5>Adam Phillips</td>
-                                <td></td>
-                                <td class="bg-primary text-white">
-                                    <h5 class="text-white">Power Lifting</h5>James Alien</td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div id="class-all" class="container tab-pane p-0 active">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-lg m-0">
+                            <thead class="bg-secondary text-white text-center">
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Monday</th>
+                                    <th>Tuesday</th>
+                                    <th>Wednesday</th>
+                                    <th>Thursday</th>
+                                    <th>Friday</th>
+                                    <th>Saturday</th>
+                                    <th>Sunday</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                {% for time_slot in class_schedules %}
+                                <tr>
+                                    <th class="bg-secondary text-white align-middle">{{ time_slot.time_slot }}</th>
+                                    {% for day in days %}
+                                    <td>
+                                        {% if time_slot.day %}
+                                        <h5>{{ time_slot.class_name }}</h5>{{ time_slot.instructor }} {% endif %}
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 <!-- Class Timetable End -->
 
@@ -373,7 +334,7 @@
             <div class="col-md-6">
                 <div class="pr-md-3 d-none d-md-block">
                     <h4 class="text-primary">Body Mass Index </h4>
-                    <h4 class="display-4 text-white font-weight-bold mb-4">Whate is BMI?</h4>
+                    <h4 class="display-4 text-white font-weight-bold mb-4">What is BMI?</h4>
                     <p class="m-0 text-white">Body mass index is a value derived from the mass and height of a person. The BMI is defined as the body mass divided by the square of the body height, and is expressed in units of kg/m²..</p>
                 </div>
             </div>

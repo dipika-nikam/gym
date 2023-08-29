@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django import forms
+
 
 country=[
      ('India', 'India'),
@@ -106,24 +108,29 @@ class Order(models.Model):
         return total
 
 
-class ClassTimeTable(models.Model):
-    DAYS = (
-        ('MONDAY','MONDAY'),
-        ('TUESDAY','TUESDAY'),
-        ('WEDNESDAY','WEDNESDAY'),
-        ('THURSDAY','THURSDAY'),
-        ('FRIDAY','FRIDAY'),
-        ('SATURDAY','SATURDAY'),
-        ('SUNDAY','SUNDAY'),
+class ClassSchedule(models.Model):
+    DAY_CHOICES = (
+        ('Monday', 'Monday'),
+        ('Tuesday', 'Tuesday'),
+        ('Wednesday', 'Wednesday'),
+        ('Thursday', 'Thursday'),
+        ('Friday', 'Friday'),
+        ('Saturday', 'Saturday'),
+        ('Sunday', 'Sunday'),
     )
-    TIME = (
-         ('6.00AM - 8.00AM', '6.00AM - 8.00AM'),
-         ('10.00AM - 12.00AM', '10.00AM - 12.00AM'),
-         ('5.00PM - 7.00PM', '5.00PM - 7.00PM'),
-         ('7.00PM - 9.00PM', '7.00PM - 9.00PM'),
-    )
-    days = models.CharField(choices=DAYS, max_length=50)
-    time = models.CharField(choices=TIME, max_length=50)
 
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    day = models.CharField(max_length=10, choices=DAY_CHOICES)
+    instructor = models.CharField(max_length=100)
+
+    @property
+    def time_slot(self):
+        start_time = self.start_time.strftime('%I:%M%p')
+        end_time = self.end_time.strftime('%I:%M%p')
+        return f"{start_time} - {end_time}"
+
+    def __str__(self):
+        return f"{self.day} - {self.time_slot}"
 
 
