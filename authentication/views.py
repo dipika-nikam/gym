@@ -28,7 +28,7 @@ def login(request):
         else:
             messages.info(
                 request, 'Invalid!!, Check your username or password.')
-            return redirect('/')
+            return redirect('login')
     else:
         return render(request, 'login.html')
 
