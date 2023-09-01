@@ -23,7 +23,8 @@
                     <th>Phone</th>
                     <th>Profile Image</th>
                     <th>Country</th>
-                    <th>Action</th>
+                    <th>Delete</th>
+                    <th>Update</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,8 +41,10 @@
                     </td>
                     <td>{{ item.country }}</td>
                     <td>
-                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{ item.id }}">Delete</a>
-                        <!-- <a href="#" class="btn btn-info" data-toggle="modal" data-target="#updateModal{{ item.id }}">Update</a> -->
+                        <a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{ item.id }}">Delete</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'update-user' item.id %}" class="btn btn-secondary">Update</a>
                     </td>
                 </tr>
                 <!-- Modal -->

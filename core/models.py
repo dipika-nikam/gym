@@ -137,9 +137,9 @@ class ClassSchedule(models.Model):
 class AddUsers(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
-    phone = models.CharField(max_length=10)
-    profileimage = models.ImageField(upload_to="profileimage")
-    country = models.CharField(max_length=50)
+    phone = models.CharField(max_length=10, blank = True, null = True)
+    profileimage = models.ImageField(upload_to="profileimage", blank = True, null = True)
+    country = models.CharField(max_length=50, blank = True, null = True)
 
     def __str__(self):
          return self.name

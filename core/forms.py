@@ -25,3 +25,7 @@ class CustomUserForm(forms.ModelForm):
         model = AddUsers
         fields = ['name', 'email', 'phone', 'profileimage', 'country']
 
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = AddUsers
+        fields = ['name', 'email', 'phone', 'profileimage', 'country']
