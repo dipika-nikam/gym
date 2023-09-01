@@ -1,7 +1,7 @@
 from django import forms
 from core.models import Contact
 from django.contrib.auth.models import User
-from .models import Profile,Product
+from .models import Profile,Product, AddUsers
 
 class ContactForm(forms.ModelForm):
     class Meta:
@@ -18,4 +18,10 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = '__all__'
+
+
+class CustomUserForm(forms.ModelForm):
+    class Meta:
+        model = AddUsers
+        fields = ['name', 'email', 'phone', 'profileimage', 'country']
 

@@ -11,7 +11,7 @@
         </div>
     </div>
     {% for message in messages %}
-    <div class="alert alert-danger" role="alert">{{ message }}</div>
+    <div class="alert alert-success" role="alert">{{ message }}</div>
     {% endfor %}
     <div class="table-responsive">
         <table class="table table-bordered">
@@ -23,22 +23,50 @@
                     <th>Phone</th>
                     <th>Profile Image</th>
                     <th>Country</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 {% for item in items %} {% if not item.is_superuser %}
                 <tr>
                     <td>{{ item.id }}</td>
-                    <td>{{ item.username }}</td>
+                    <td>{{ item.name }}</td>
                     <td>{{ item.email }}</td>
                     <td>{{ item.phone }}</td>
                     <td>
-                        {% if item.profile_image %}
-                        <img src="{{ item.profile_image.url }}" class="rounded-circle" width="50px"> {% else %}
-                        <img src="{% static 'C:\Users\INF-0005\Desktop\gym\static\img\carousel-1.jpg' %}" class="rounded-circle" width="75px"> {% endif %}
+                        {% if item.profileimage %}
+                        <img src="{{ item.profileimage.url }}" class="rounded-circle" width="50px"> {% else %}
+                        <img src="{% static 'img/default-profile.jpg' %}" class="rounded-circle" width="50px"> {% endif %}
                     </td>
                     <td>{{ item.country }}</td>
+                    <td>
+                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{ item.id }}">Delete</a>
+                        <!-- <a href="#" class="btn btn-info" data-toggle="modal" data-target="#updateModal{{ item.id }}">Update</a> -->
+                    </td>
                 </tr>
+                <!-- Modal -->
+                <div class="modal fade" id="deleteModal{{ item.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure you want to delete {{ item.name }}?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <form method="post" action="{% url 'delete-user' item.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 {% endif %} {% endfor %}
             </tbody>
         </table>

@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
-from . models import Profile, Product, Order, OrderItem, ClassSchedule
+from . models import Profile, Product, Order, OrderItem, ClassSchedule, AddUsers
 from django.contrib.auth.models import User
-from core.forms import ContactForm, ProfileForm
+from core.forms import ContactForm, ProfileForm, CustomUserForm
 from django.contrib import messages
 from django.conf import settings
 from django.http.response import JsonResponse
@@ -279,23 +279,28 @@ def order_checkout(request, id):
 
 @login_required(login_url='/authentication/login/')
 def users(request):
-    items = User.objects.all()
+    items = AddUsers.objects.all()
     return render(request, "allusers.html", {"items":items})
 
 
 @login_required(login_url='/authentication/login/')
 def add_user(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, 'User has been added successfully.')
             return redirect('all-users')
     else:
-        form = UserCreationForm()
+        form = CustomUserForm()
 
     context = {'form': form}
     return render(request, 'add_user.html', context)
+
+def delete_user(request, user_id):
+    user = get_object_or_404(AddUsers, id=user_id)
+    user.delete()
+    return redirect('all-users')
 
 
 def update_quantity(request, item_id, new_quantity):

@@ -134,3 +134,12 @@ class ClassSchedule(models.Model):
         return f"{self.day} - {self.time_slot}"
 
 
+class AddUsers(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField(unique=True)
+    phone = models.CharField(max_length=10)
+    profileimage = models.ImageField(upload_to="profileimage")
+    country = models.CharField(max_length=50)
+
+    def __str__(self):
+         return self.name
