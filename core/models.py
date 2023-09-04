@@ -3,21 +3,46 @@ from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django import forms
+from django_countries.fields import CountryField
 
-
-country=[
-     ('India', 'India'),
-     ('India', 'India'),
-     ('India', 'India'),
-     ('India', 'India'),
-]
 
 studio_type = [
+     ('Bootcamp (Outdoor)', 'Bootcamp (Outdoor)'),
+     ('Bootcamp (Studio)', 'Bootcamp (Studio)'),
+     ('Boxing', 'Boxing'),
+     ('CrossFit', 'CrossFit'),
+     ('Health Club', 'Health Club'),
+     ('Martial Arts', 'Martial Arts'),
+     ('Personal Training', 'Personal Training'),
+     ('Pilates', 'Pilates'),
+     ('Spin', 'Spin'),
+     ('Strength and Conditioning', 'Strength and Conditioning'),
      ('Yoga', 'Yoga'),
-     ('Yoga', 'Yoga'),
-     ('Yoga', 'Yoga'),
-     ('Yoga', 'Yoga'),
-     ('Yoga', 'Yoga'),
+     ('Weightlifting', 'Weightlifting'),
+     ('Other', 'Other'),
+]
+Business = [
+     ('Yes', 'Yes'),
+     ('No', 'No'),
+]
+
+Revenue = [
+     ('$0 - $5k', '$0 - $5k'),
+     ('$5k - $10k', '$5k - $10k'),
+     ('$10k - $14k', '$10k - $14k'),
+     ('$14k - $25k', '$14k - $25k'),
+     ('$25k - $35k', '$25k - $35k'),
+     ('$35k - $50k', '$35k - $50k'),
+     ('More', 'More'),
+]
+
+Primary_revenue=[
+     ('Class-Based Memberships','Class-Based Memberships'),
+     ('Personal Training','Personal Training'),
+     ('Hybrid (class and personal training)','Hybrid (class and personal training)'),
+     ('Remote Coaching','Remote Coaching'),
+     ('24hr Gym Access','24hr Gym Access'),
+     ('Other','Other'),
 ]
 class Profile(models.Model):
     subs = [
@@ -28,10 +53,13 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_pic = models.ImageField(blank=True, null=True, upload_to='images/')
     phone_no = models.CharField(max_length=15)
-    country = models.CharField(max_length=200, choices=country, null=True, blank=True)
+    country = CountryField(blank=True)
     studio_type = models.CharField(max_length=200, choices=studio_type, null=True, blank=True)
     is_subscribed = models.BooleanField(default=False)
     subscribed_type = models.CharField(max_length=50, choices=subs, null=True, blank=True)
+    business = models.CharField(max_length=50, choices=Business, null=True, blank=True)
+    revenue = models.CharField(max_length=50, choices=Revenue, null=True, blank=True)
+    primary_revenue = models.CharField(max_length=50, choices=Primary_revenue, null=True, blank=True)
     checkout_session = models.CharField(max_length=200, null=True, blank=True)
     payment_id = models.CharField(max_length=200, null=True, blank=True)
 

@@ -9,6 +9,9 @@
     </div>
 </div>
 <!-- Page Header End -->
+<button type="button" class="btn btn-secondary" id="backButton">
+    <i class="fas fa-arrow-left"></i> 
+</button>
 <div class="container col-md-4">
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -25,8 +28,16 @@
         </fieldset>
         <div class="d-grid gap-2">
             <button class="btn btn-primary" type="submit">Save</button>
+            <a href="{% url 'profile' %}">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </a>
         </div>
     </form>
-    
 </div>
+
+<script>
+    document.getElementById("backButton").addEventListener("click", function () {
+        history.back(); 
+    });
+</script>
 {% endblock %}

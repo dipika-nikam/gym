@@ -11,7 +11,7 @@ class ContactForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['user','profile_pic','phone_no', 'country','studio_type','subscribed_type']
+        fields = ['user','profile_pic','phone_no', 'country','studio_type','subscribed_type','business','revenue','primary_revenue']
 
 
 class ProductForm(forms.ModelForm):
