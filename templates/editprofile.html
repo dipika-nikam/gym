@@ -1,7 +1,4 @@
-{% extends "base.html" %}
-{% load static %}
-{% load widget_tweaks %}
-{% block content %}
+{% extends "base.html" %} {% load static %} {% load widget_tweaks %} {% block content %}
 <!-- Page Header Start -->
 <div class="container-fluid page-header mb-5">
     <div class="d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5" style="min-height: 100px">
@@ -21,31 +18,28 @@
                         <label for="id_profile" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; cursor: pointer;">
                             Change Photo
                         </label>
-                    </div>
-                </div>
-            </label>
-            <input type="file" id="id_profile" name="profile_pic" style="display: none;">
         </div>
-        <fieldset class="form-group">
-            {% for field in form.visible_fields %}
-            {% if field.name != 'profile_pic' %}
-            <div class="mb-3">
-                {{ field.errors }}
-                {{ field.label_tag }} {% render_field field class+="form-control" %}
-                {% if field.help_text %}
-                <small class="text-muted">{{ field.help_text|safe }}</small>
-                {% endif %}
-            </div>
-            {% endif %}
-            {% endfor %}
-        </fieldset>
-        <div class="d-grid gap-2">
-            <button class="btn btn-primary" type="submit">Save</button>
-            <a href="{% url 'profile' %}">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            </a>
-        </div>
-    </form>
+</div>
+</label>
+<input type="file" id="id_profile" name="profile_pic" style="display: none;">
+</div>
+<fieldset class="form-group">
+    {% for field in form.visible_fields %} {% if field.name != 'profile_pic' %}
+    <div class="mb-3">
+        {{ field.errors }} {{ field.label_tag }} {% render_field field class+="form-control" %} {% if field.help_text %}
+        <small class="text-muted">{{ field.help_text|safe }}</small> {% endif %}
+    </div>
+    {% endif %} {% endfor %}
+</fieldset>
+<div class="row">
+    <div class="col-md-6">
+        <button type="submit" class="btn btn-primary btn-block">Update</button>
+    </div>
+    <div class="col-md-6">
+        <a href="{% url 'profile' %}" class="btn btn-secondary btn-block">Cancel</a>
+    </div>
+</div>
+</form>
 </div>
 <script>
     document.getElementById("id_profile").addEventListener("change", function() {
