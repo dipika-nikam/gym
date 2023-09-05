@@ -1,43 +1,72 @@
-{% extends "base.html" %}
-{% load static %}
-{% load widget_tweaks %}
-{% block content %}
+{% extends "base.html" %} {% load static %} {% load widget_tweaks %} {% block content %}
 <!-- Page Header Start -->
 <div class="container-fluid page-header mb-5">
     <div class="d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5" style="min-height: 100px">
-        <h4 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase font-weight-bold">Edit Profile</h4>
+        <h4 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase font-weight-bold">Edit User</h4>
     </div>
 </div>
 <!-- Page Header End -->
-<button type="button" class="btn btn-secondary" id="backButton">
-    <i class="fas fa-arrow-left"></i> 
-</button>
+
 <div class="container col-md-4">
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <fieldset class="form-group">
-            {% for field in form %}
-            <div class="mb-3">
-                {{ field.errors }}
-                {{ field.label_tag }} {% render_field field class+="form-control" %}
-                {% if field.help_text %}
-                <small class="text-muted">{{ field.help_text|safe }}</small>
-                {% endif %}
-            </div>
-            {% endfor %}
-        </fieldset>
-        <div class="d-grid gap-2">
-            <button class="btn btn-primary" type="submit">Save</button>
-            <a href="{% url 'profile' %}">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            </a>
+        <div class="text-center">
+            <label for="id_profile">
+                <div id="profile-container" style="position: relative; display: inline-block;">
+                    <img id="profile-preview" src="{{ user.profile.profile_pic.url }}" alt="Profile Image" class="img-thumbnail mb-3 rounded-circle" style="max-width: 200px; max-height: 200px; cursor: pointer;">
+                    <div id="change-photo-btn" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: none; text-align: center;">
+                        <label for="id_profile" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; cursor: pointer;">
+                            Change Photo
+                        </label>
         </div>
-    </form>
 </div>
-
+</label>
+<input type="file" id="id_profile" name="profile_pic" style="display: none;">
+</div>
+<fieldset class="form-group">
+    {% for field in form.visible_fields %} {% if field.name != 'profile_pic' %}
+    <div class="mb-3">
+        {{ field.errors }} {{ field.label_tag }} {% render_field field class+="form-control" %} {% if field.help_text %}
+        <small class="text-muted">{{ field.help_text|safe }}</small> {% endif %}
+    </div>
+    {% endif %} {% endfor %}
+</fieldset>
+<div class="row">
+    <div class="col-md-6">
+        <button type="submit" class="btn btn-primary btn-block">Update</button>
+    </div>
+    <div class="col-md-6">
+        <a href="{% url 'profile' %}" class="btn btn-secondary btn-block">Cancel</a>
+    </div>
+</div>
+</form>
+</div>
 <script>
-    document.getElementById("backButton").addEventListener("click", function () {
-        history.back(); 
+    document.getElementById("id_profile").addEventListener("change", function() {
+        const preview = document.getElementById("profile-preview");
+        const fileInput = this;
+
+        if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+            };
+
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+    });
+
+    const profileContainer = document.getElementById("profile-container");
+    const changePhotoBtn = document.getElementById("change-photo-btn");
+
+    profileContainer.addEventListener("mouseenter", function() {
+        changePhotoBtn.style.display = "block";
+    });
+
+    profileContainer.addEventListener("mouseleave", function() {
+        changePhotoBtn.style.display = "none";
     });
 </script>
+
 {% endblock %}

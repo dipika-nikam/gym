@@ -24,7 +24,6 @@
                     <th>assigned to</th>
                     <th>refered by</th>
                     <th>Profile Image</th>
-                    <th>Country</th>
                     <th>Delete</th>
                     <th>Update</th>
                 </tr>
@@ -43,7 +42,6 @@
                         <img src="{{ item.profile.url }}" class="rounded-circle" width="50px"> {% else %}
                         <img src="{% static 'img/default-profile.jpg' %}" class="rounded-circle" width="50px"> {% endif %}
                     </td>
-                    <td>{{ item.country }}</td>
                     <td>
                         <a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{ item.id }}">Delete</a>
                     </td>
