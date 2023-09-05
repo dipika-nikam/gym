@@ -1,6 +1,4 @@
-{% extends "base.html" %}
-{% load static %}
-{% block content %}
+{% extends "base.html" %} {% load static %} {% block content %}
 
 <!-- Page Header Start -->
 <div class="container-fluid page-header mb-5">
@@ -12,10 +10,11 @@
 <div class="container">
     <div class="d-flex justify-content-between p-2 bd-highlight">
         <h2>Product</h2>
-        <a href="{% url 'add_product' %}"><button class="btn btn-primary">Add Product</button></a>
+        {% if request.user.is_superuser %}
+        <a href="{% url 'add_product' %}"><button class="btn btn-primary">Add Product</button></a> {% endif %}
     </div>
-    {% for message in messages%}
-    <div class="alert alert-danger" role="alert">{{message}}</div>
+    {% for message in messages %}
+    <div class="alert alert-danger" role="alert">{{ message }}</div>
     {% endfor %}
     <div class="row">
         {% for item in items %}
@@ -30,11 +29,38 @@
                             <a href="{% url 'add-to-cart' choice=item.id %}">
                                 <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
                             </a>
-                            <a href="{% url 'delete_product' item.id %}" style="margin-left: 5px;" >
+                            {% if request.user.is_superuser %}
+                            <a href="{% url 'update_product' item.id %}" style="margin-left: 5px;">
+                                <button type="button" class="btn btn-sm btn-outline-info ">Update</button>
+                            </a>
+                            <a href="#" data-toggle="modal" data-target="#deleteModal{{ item.id }}" style="margin-left: 5px;">
                                 <button type="button" class="btn btn-sm btn-outline-danger">Delete</button>
                             </a>
+                            {% endif %}
                         </div>
                         <p class="font-weight-bolder">${{ item.price }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Delete Product Modal -->
+        <div class="modal fade" id="deleteModal{{ item.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel{{ item.id }}" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel{{ item.id }}">Confirm Deletion</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete the product "{{ item.name }}"?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <a href="{% url 'delete_product' item.id %}">
+                            <button type="button" class="btn btn-danger">Delete</button>
+                        </a>
                     </div>
                 </div>
             </div>

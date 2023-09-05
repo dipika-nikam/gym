@@ -2,20 +2,47 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django import forms
+from django_countries.fields import CountryField
 
-country=[
-     ('India', 'India'),
-     ('India', 'India'),
-     ('India', 'India'),
-     ('India', 'India'),
-]
 
 studio_type = [
+     ('Bootcamp (Outdoor)', 'Bootcamp (Outdoor)'),
+     ('Bootcamp (Studio)', 'Bootcamp (Studio)'),
+     ('Boxing', 'Boxing'),
+     ('CrossFit', 'CrossFit'),
+     ('Health Club', 'Health Club'),
+     ('Martial Arts', 'Martial Arts'),
+     ('Personal Training', 'Personal Training'),
+     ('Pilates', 'Pilates'),
+     ('Spin', 'Spin'),
+     ('Strength and Conditioning', 'Strength and Conditioning'),
      ('Yoga', 'Yoga'),
-     ('Yoga', 'Yoga'),
-     ('Yoga', 'Yoga'),
-     ('Yoga', 'Yoga'),
-     ('Yoga', 'Yoga'),
+     ('Weightlifting', 'Weightlifting'),
+     ('Other', 'Other'),
+]
+Business = [
+     ('Yes', 'Yes'),
+     ('No', 'No'),
+]
+
+Revenue = [
+     ('$0 - $5k', '$0 - $5k'),
+     ('$5k - $10k', '$5k - $10k'),
+     ('$10k - $14k', '$10k - $14k'),
+     ('$14k - $25k', '$14k - $25k'),
+     ('$25k - $35k', '$25k - $35k'),
+     ('$35k - $50k', '$35k - $50k'),
+     ('More', 'More'),
+]
+
+Primary_revenue=[
+     ('Class-Based Memberships','Class-Based Memberships'),
+     ('Personal Training','Personal Training'),
+     ('Hybrid (class and personal training)','Hybrid (class and personal training)'),
+     ('Remote Coaching','Remote Coaching'),
+     ('24hr Gym Access','24hr Gym Access'),
+     ('Other','Other'),
 ]
 class Profile(models.Model):
     subs = [
@@ -26,10 +53,13 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_pic = models.ImageField(blank=True, null=True, upload_to='images/')
     phone_no = models.CharField(max_length=15)
-    country = models.CharField(max_length=200, choices=country, null=True, blank=True)
+    country = CountryField(blank=True)
     studio_type = models.CharField(max_length=200, choices=studio_type, null=True, blank=True)
     is_subscribed = models.BooleanField(default=False)
     subscribed_type = models.CharField(max_length=50, choices=subs, null=True, blank=True)
+    business = models.CharField(max_length=50, choices=Business, null=True, blank=True)
+    revenue = models.CharField(max_length=50, choices=Revenue, null=True, blank=True)
+    primary_revenue = models.CharField(max_length=50, choices=Primary_revenue, null=True, blank=True)
     checkout_session = models.CharField(max_length=200, null=True, blank=True)
     payment_id = models.CharField(max_length=200, null=True, blank=True)
 
@@ -106,24 +136,38 @@ class Order(models.Model):
         return total
 
 
-class ClassTimeTable(models.Model):
-    DAYS = (
-        ('MONDAY','MONDAY'),
-        ('TUESDAY','TUESDAY'),
-        ('WEDNESDAY','WEDNESDAY'),
-        ('THURSDAY','THURSDAY'),
-        ('FRIDAY','FRIDAY'),
-        ('SATURDAY','SATURDAY'),
-        ('SUNDAY','SUNDAY'),
+class ClassSchedule(models.Model):
+    DAY_CHOICES = (
+        ('Monday', 'Monday'),
+        ('Tuesday', 'Tuesday'),
+        ('Wednesday', 'Wednesday'),
+        ('Thursday', 'Thursday'),
+        ('Friday', 'Friday'),
+        ('Saturday', 'Saturday'),
+        ('Sunday', 'Sunday'),
     )
-    TIME = (
-         ('6.00AM - 8.00AM', '6.00AM - 8.00AM'),
-         ('10.00AM - 12.00AM', '10.00AM - 12.00AM'),
-         ('5.00PM - 7.00PM', '5.00PM - 7.00PM'),
-         ('7.00PM - 9.00PM', '7.00PM - 9.00PM'),
-    )
-    days = models.CharField(choices=DAYS, max_length=50)
-    time = models.CharField(choices=TIME, max_length=50)
+
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    day = models.CharField(max_length=10, choices=DAY_CHOICES)
+    instructor = models.CharField(max_length=100)
+
+    @property
+    def time_slot(self):
+        start_time = self.start_time.strftime('%I:%M%p')
+        end_time = self.end_time.strftime('%I:%M%p')
+        return f"{start_time} - {end_time}"
+
+    def __str__(self):
+        return f"{self.day} - {self.time_slot}"
 
 
+class AddUsers(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField(unique=True)
+    phone = models.CharField(max_length=10, blank = True, null = True)
+    profileimage = models.ImageField(upload_to="profileimage", blank = True, null = True)
+    country = models.CharField(max_length=50, blank = True, null = True)
 
+    def __str__(self):
+         return self.name

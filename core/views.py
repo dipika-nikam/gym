@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
-from . models import Profile, Product, Order, OrderItem
+from . models import Profile, Product, Order, OrderItem, ClassSchedule, AddUsers
 from django.contrib.auth.models import User
-from core.forms import ContactForm, ProfileForm
+from core.forms import ContactForm, ProfileForm, CustomUserForm, UserUpdateForm
 from django.contrib import messages
 from django.conf import settings
 from django.http.response import JsonResponse
@@ -23,8 +23,12 @@ def index(request):
 
     return render(request, "index.html")
 
+# def classes(request):
+#     return render(request, "class.html")
+
 def classes(request):
-    return render(request, "class.html")
+    class_schedules = ClassSchedule.objects.all()
+    return render(request, 'class.html', {'class_schedules': class_schedules})
 
 def contact(request):
     if request.method =="POST":
@@ -175,7 +179,7 @@ def add_product(request):
             return redirect('products')
     else:
         form = ProductForm()
-    
+
     context = {
         'form': form,
     }
@@ -186,6 +190,22 @@ def delete_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     product.delete()
     return redirect('products')
+
+def update_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('products')
+    else:
+        form = ProductForm(instance=product)
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'update_product.html', context)
 
 @login_required(login_url='/authentication/login/')
 def cart(request):
@@ -259,23 +279,43 @@ def order_checkout(request, id):
 
 @login_required(login_url='/authentication/login/')
 def users(request):
-    items = User.objects.all()
+    items = AddUsers.objects.all()
     return render(request, "allusers.html", {"items":items})
 
 
 @login_required(login_url='/authentication/login/')
 def add_user(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, 'User has been added successfully.')
             return redirect('all-users')
     else:
-        form = UserCreationForm()
+        form = CustomUserForm()
 
     context = {'form': form}
     return render(request, 'add_user.html', context)
+
+def delete_user(request, user_id):
+    user = get_object_or_404(AddUsers, id=user_id)
+    user.delete()
+    return redirect('all-users')
+
+def update_user(request, user_id):
+    user = get_object_or_404(AddUsers, id = user_id)
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, request.FILES, instance = user)
+        if form.is_valid():
+            form.save()
+            return redirect('all-users')
+    else:
+        form = UserUpdateForm(instance = user)
+
+    context = {
+        'form' : form,
+    }
+    return render(request, 'update_user.html', context)
 
 
 def update_quantity(request, item_id, new_quantity):

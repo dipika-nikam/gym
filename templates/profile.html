@@ -21,6 +21,10 @@
                 <td>{{profile.user.username}}</td>
             </tr>
             <tr>
+                <td>Phone No.</td>
+                <td>{{profile.phone_no}}</td>
+            </tr>
+            <tr>
                 <td>Profile pic</td>
                 <h1>{{profile.user.profile_pic}}</h1>
                 <td>
@@ -30,7 +34,9 @@
                         No profile picture available.
                     {% endif %}
                 </td>
+            </tr>
             <tr>
+
                 <td>Stuio/Gym Type</td>
                 <td>{{profile.studio_type}}</td>
             </tr>
@@ -38,13 +44,27 @@
                 <td>Country</td>
                 <td>{{profile.country}}</td>
             </tr>
-            <tr>
-                <td>Subscription</td>
-                <td>{{profile.is_subscribed}}</td>
-            </tr>
+
             <tr>
                 <td>Subscription type</td>
                 <td>{{profile.get_subscribed_type_display}}</td>
+            </tr>
+            <tr>
+
+                <td>Is Your Business Already Open?</td>
+                <td>{{profile.business}}</td>
+            </tr>
+            <tr>
+
+                <td>Your Average Monthly Revenue
+                </td>
+                <td>{{profile.revenue}}</td>
+            </tr>
+            <tr>
+
+                <td>Primary Revenue Source
+                </td>
+                <td>{{profile.primary_revenue}}</td>
             </tr>
         </table>
     </form>
