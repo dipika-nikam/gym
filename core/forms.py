@@ -23,9 +23,9 @@ class ProductForm(forms.ModelForm):
 class CustomUserForm(forms.ModelForm):
     class Meta:
         model = AddUsers
-        fields = ['name', 'email', 'phone', 'profileimage', 'country']
+        fields = ['name', 'email', 'phone', 'profile', 'country', 'assigned_to', 'refered_by']
 
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = AddUsers
-        fields = ['name', 'email', 'phone', 'profileimage', 'country']
+        fields = ['name', 'email', 'phone', 'profile', 'country', 'assigned_to', 'refered_by']

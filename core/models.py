@@ -163,11 +163,29 @@ class ClassSchedule(models.Model):
 
 
 class AddUsers(models.Model):
+    COUNTRY = (
+        ('UK', 'UK'),
+        ('India', 'India'),
+        ('USA', 'USA'),
+        ('Canada', 'Canada'),
+    )
+    REFERED = (
+        ('Walk-in', 'Walk-in'),
+        ('Google', 'Google'),
+        ('Facebook', 'Facebook'),
+        ('Advertisement', 'Advertisement'),
+        ('Website / Blog', 'Website / Blog'),
+        ('Existing Member', 'Existing Member'),
+        ('Staff Member', 'Staff Member'),
+        ('Other', 'Other'),
+    )
     name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=10, blank = True, null = True)
-    profileimage = models.ImageField(upload_to="profileimage", blank = True, null = True)
-    country = models.CharField(max_length=50, blank = True, null = True)
+    profile = models.ImageField(upload_to="profileimage")
+    country = models.CharField(max_length=50, choices=COUNTRY, blank = True, null = True)
+    assigned_to = models.ForeignKey(Profile,on_delete=models.CASCADE)
+    refered_by = models.CharField(max_length=50, choices=REFERED)
 
     def __str__(self):
          return self.name

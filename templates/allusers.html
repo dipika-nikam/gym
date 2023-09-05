@@ -21,6 +21,8 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Phone</th>
+                    <th>assigned to</th>
+                    <th>refered by</th>
                     <th>Profile Image</th>
                     <th>Country</th>
                     <th>Delete</th>
@@ -34,9 +36,11 @@
                     <td>{{ item.name }}</td>
                     <td>{{ item.email }}</td>
                     <td>{{ item.phone }}</td>
+                    <td>{{ item.assigned_to }}</td>
+                    <td>{{ item.refered_by }}</td>
                     <td>
-                        {% if item.profileimage %}
-                        <img src="{{ item.profileimage.url }}" class="rounded-circle" width="50px"> {% else %}
+                        {% if item.profile %}
+                        <img src="{{ item.profile.url }}" class="rounded-circle" width="50px"> {% else %}
                         <img src="{% static 'img/default-profile.jpg' %}" class="rounded-circle" width="50px"> {% endif %}
                     </td>
                     <td>{{ item.country }}</td>

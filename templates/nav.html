@@ -10,15 +10,24 @@
         <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
             <div class="navbar-nav ml-auto p-4 bg-secondary">
                 <a href="{% url 'index' %}" class="nav-item nav-link active">Home</a>
-                <a href="{% url 'classes' %}" class="nav-item nav-link">Classes</a>
-                <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
+                <!-- <a href="{% url 'classes' %}" class="nav-item nav-link">Classes</a> -->
+                <!-- <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a> -->
                 <a href="{% url 'products' %}" class="nav-item nav-link">Merchandise</a> {% if user.is_authenticated %} {% if user.is_superuser %}
-                <a href="{% url 'all-users' %}" class="nav-item nav-link">All Users</a> {% endif %}
+                <!-- <a href="{% url 'all-users' %}" class="nav-link dropdown-toggle">People</a> {% endif %} -->
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">People</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{% url 'all-users' %}">People</a></li>
+                        <li><a class="dropdown-item" href="#">Leads</a></li>
+                        <li><a class="dropdown-item" href="#">Staff Members</a></li>
+                        <li>
+                            <a class="dropdown-item" href="#">Migrateion Assistant</a>
+                        </li>
+                    </ul>
+                </li>
 
-                <a href="{% url 'profile' %}" class="nav-item nav-link">Profile</a> 
-                {% if cart %}
-                <a href="{% url 'cart' %}" class="nav-item nav-link">Cart<span class="badge badge-light badge-pill">{{ cart }}</span></a> 
-                {% endif %}
+                <a href="{% url 'profile' %}" class="nav-item nav-link">Profile</a> {% if cart %}
+                <a href="{% url 'cart' %}" class="nav-item nav-link">Cart<span class="badge badge-light badge-pill">{{ cart }}</span></a> {% endif %}
 
                 <a href="{% url 'logout' %}" class="nav-item nav-link">Logout</a> {% else %}
                 <a href="{% url 'login' %}" class="nav-item nav-link">Login</a>
