@@ -162,22 +162,22 @@ class ClassSchedule(models.Model):
         return f"{self.day} - {self.time_slot}"
 
 
+REFERED = (
+    ('Walk-in', 'Walk-in'),
+    ('Google', 'Google'),
+    ('Facebook', 'Facebook'),
+    ('Advertisement', 'Advertisement'),
+    ('Website / Blog', 'Website / Blog'),
+    ('Existing Member', 'Existing Member'),
+    ('Staff Member', 'Staff Member'),
+    ('Other', 'Other'),
+)
 class AddUsers(models.Model):
     COUNTRY = (
         ('UK', 'UK'),
         ('India', 'India'),
         ('USA', 'USA'),
         ('Canada', 'Canada'),
-    )
-    REFERED = (
-        ('Walk-in', 'Walk-in'),
-        ('Google', 'Google'),
-        ('Facebook', 'Facebook'),
-        ('Advertisement', 'Advertisement'),
-        ('Website / Blog', 'Website / Blog'),
-        ('Existing Member', 'Existing Member'),
-        ('Staff Member', 'Staff Member'),
-        ('Other', 'Other'),
     )
     name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
@@ -186,6 +186,37 @@ class AddUsers(models.Model):
     country = models.CharField(max_length=50, choices=COUNTRY, blank = True, null = True)
     assigned_to = models.ForeignKey(Profile,on_delete=models.CASCADE)
     refered_by = models.CharField(max_length=50, choices=REFERED)
+
+    def __str__(self):
+         return self.name
+
+class Lead(models.Model):
+    STATUS = (
+        ('New Lead', 'New Lead'),
+        ('Attempted', 'Attempted'),
+        ('Contacted', 'Contacted'),
+        ('In Discussion', 'In Discussion'),
+        ('Converted', 'Converted'),
+        ('Disqualified', 'Disqualified'),
+    )
+
+    OBJECTIVES = (
+        ('Weight Loss', 'Weight Loss'),
+        ('Athletic Performance', 'Athletic Performance'),
+        ('Health Reasons', 'Health Reasons'),
+        ('Others', 'Others'),
+    )
+
+    status = models.CharField(max_length = 50 , choices=STATUS)
+    email = models.EmailField(unique=True)
+    name = models.CharField(max_length=50)
+    birthday = models.CharField(max_length=15)
+    postal_code = models.IntegerField()
+    mobile_no = models.CharField(max_length=15)
+    objectives = models.CharField(choices=OBJECTIVES, max_length=20)
+    refered_by = models.CharField(max_length=50, choices=REFERED)
+    notes = models.TextField(blank=True, null=True)
+
 
     def __str__(self):
          return self.name
