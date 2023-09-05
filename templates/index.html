@@ -30,64 +30,295 @@
         </a>
     </div>
 </div>
-<!-- Carousel End -->
 
 
-<!-- Gym Class Start -->
-<div class="container gym-class mb-5">
-    <div class="row px-3">
-        <div class="col-md-6 p-0">
-            <div class="gym-class-box d-flex flex-column align-items-end justify-content-center bg-primary text-right text-white py-5 px-5">
-                <i class="flaticon-six-pack"></i>
-                <h3 class="display-4 mb-3 text-white font-weight-bold">Body Building</h3>
-                <p>
-                    Bodybuilding is the activity of exerting your muscles to strengthen them and make them more prominent. People have been building their bodies since the ancient days, with philosophers like Plato known for their muscular physique. .
-                </p>
-                <a href="{% url 'subscribe' %}" class="btn btn-lg btn-outline-light mt-4 px-4">Join Now</a>
+<div class="container-fluid py-4 v2">
+    <div class="row">
+        <div class="col-12 col-lg-3 col-md-6 mb-5">
+            <!-- Calendar Card -->
+            <div class="card">
+                <div class="card-header bg-primary py-5 px-3">
+                    <div class="row">
+                        <div class="col-8">
+                            <h2 class="text-white">My Day</h2>
+                        </div>
+                        <div class="col-4 d-flex justify-content-end">
+                            <a href="/scheduler/index" class="position-absolute btn btn-secondary rounded-circle h-40px w-40px mt-2 d-flex align-items-center justify-content-center p-0" style="z-index: 1;">
+                                <i class="material-icons">add</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- Datepicker Input -->
+                    <div class="form-group">
+                        <label for="my-day-date-picker">Select Date</label>
+                        <input class="form-control" type="text" id="my-day-date-picker" required="" name="start_date" value="Select date" readonly="">
+                    </div>
+                    <hr class="mt-4 mb-4">
+                    <!-- Calendar Events -->
+                    <p class="text-center my-2 py-5 px-3" id="calendar-loader" style="display: none;">
+                        <span class="spinner-border text-primary" role="status"></span>
+                    </p>
+                    <p class="text-black-45 text-center my-2 py-5 px-3" id="no-calendar-events">
+                        No Classes, Events or Appointments scheduled for you today.
+                    </p>
+                    <ul class="list-unstyled mb-0" id="google-calendar-events"></ul>
+                </div>
+                <div class="card-footer">
+                    <div class="col-12 px-3 py-3 d-flex flex-column align-items-center">
+                        <p class="font-size-12px text-black-50 text-center">
+                            Connect your Google Calendar account to get a complete snapshot of your day.
+                        </p>
+                        <a class="btn btn-light" href="/users/sync/usr_54ccbb3395792e">
+                            Connect to Google
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-12 col-lg-3 col-md-6 mb-4">
+            <div class="card" id="attention-column">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card-header bg-primary py-4 px-3">
+                            <h2 class="text-white">Attention</h2>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card-body">
+                            <!---------------------
+                                AT RISK MEMBERS
+                            ---------------------->
+                            <div class="row mt-4">
+                                <div class="col-8">
+                                    <h5 class="text-dark mb-0">At-Risk Members</h5>
+                                </div>
+                                <div class="col-4 d-flex justify-content-end">
+                                    <a href="/members/risk" id="at-risk-count" class="d-flex align-items-center justify-content-center border border-secondary text-secondary rounded-circle w-20px h-20px">↗</a>
+                                </div>
+                            </div>
+                            <hr class="mt-2 mb-3">
+                                                        <p class="font-size-12px text-black-45 text-center my-2 py-5 px-3">
+                                    Members that have not been to class recently show up here.
+                                </p>
+                            
+
+                            <!----------------------------
+                                FAILED / OPEN INVOICES
+                            ----------------------------->
+                            <div class="row">
+                                <div class="col-8">
+                                    <h5 class="text-dark mb-0">Overdue Invoices</h5>
+                                </div>
+                                <div class="col-4 d-flex justify-content-end">
+                                    <a href="/invoices" id="invoices-count" class="d-flex align-items-center justify-content-center border border-secondary text-secondary rounded-circle w-20px h-20px">0</a>
+                                </div>
+                            </div>
+                            <hr class="my-2">
+                                                        <p class="font-size-12px text-black-45 text-center my-2 py-5 px-3">
+                                    Delinquent payment alerts show up here.
+                                </p>
+                            
+                            <!----------------------
+                                EXPIRING MEMBERS
+                            ------------------------>
+                            <div class="row">
+                                <div class="col-8">
+                                    <h5 class="text-dark mb-0">Expiring Members</h5>
+                                </div>
+                                <div class="col-4 d-flex justify-content-end">
+                                    <a href="/members/expiring" id="expiring-count" class="d-flex align-items-center justify-content-center border border-secondary text-secondary rounded-circle w-20px h-20px">0</a>
+                                </div>
+                            </div>
+                            <hr class="my-2">
+                                                        <p class="font-size-12px text-black-45 text-center my-2 py-5 px-3">
+                                    Memberships set to expire in the next week.
+                                </p>
+                                    
+
+                            <!-----------------------------
+                                UNVERIFIED BANK ACCOUNTS
+                            ------------------------------>
+                            <div class="row">
+                                <div class="col-8">
+                                    <h5 class="text-dark mb-0">Unverified Bank Accounts</h5>
+                                </div>
+                                <div class="col-4 d-flex justify-content-end">
+                                    <a href="/integrations/app/pushpress-ach" id="unverified-bank-count" class="d-flex align-items-center justify-content-center border border-secondary text-secondary rounded-circle w-20px h-20px">0</a>
+                                </div>
+                            </div>
+                            <hr class="my-2">
+                                                        <p class="font-size-12px text-black-45 text-center my-2 py-5 px-3">
+                                    Members who need reminding to verify their micro-deposits
+                                </p>
+                                
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-md-6 p-0">
-            <div class="gym-class-box d-flex flex-column align-items-start justify-content-center bg-secondary text-left text-white py-5 px-5">
-                <i class="flaticon-bodybuilding"></i>
-                <h3 class="display-4 mb-3 text-white font-weight-bold">Muscle Building</h3>
-                <p>
-                    First, muscle must be stimulated to increase in size. However, that stimulus must be anabolic in nature. The anabolic stimulus appears to be related to the amount of resistance used in a lift and the associated neural activation in both men and women..
-                </p>
-                <a href="{% url 'subscribe' %}" class="btn btn-lg btn-outline-light mt-4 px-4">Join Now</a>
+        <div class="col-12 col-lg-3 col-md-6 mb-4">
+            <div class="card" id="people-column">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card-header bg-primary py-4 px-3">
+                            <div class="row">
+                                <div class="col-8">
+                                    <h2 class="text-white">People</h2>
+                                </div>
+                                <div class="col-4 d-flex justify-content-end">
+                                    <a href="/members/lead_create" class="position-absolute btn btn-secondary rounded-circle h-40px w-40px mt-5 d-flex align-items-center justify-content-center p-0" style="z-index: 1;">
+                                        <i class="material-icons">add</i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card-body">
+                            <!---------------
+                                NEW LEADS
+                            ---------------->
+                            <div class="row mt-4">
+                                <div class="col-8">
+                                    <h5 class="text-dark mb-0">New Leads</h5>
+                                </div>
+                                <div class="col-4 d-flex justify-content-end">
+                                    <a href="/members/leads" id="new-lead-count" class="d-flex align-items-center justify-content-center border border-secondary text-secondary rounded-circle w-20px h-20px">↗</a>
+                                </div>
+                            </div>
+                            <hr class="mt-2 mb-3">
+                                                        <div class="row pb-4 mb-3">
+                                    <div class="col-12">
+                                                                                    <div class="form-row py-3">
+                                                    <div class="col-auto d-flex flex-column justify-content-center">
+                                                                                                                <i class="material-icons mdl-list__item-avatar">account_circle</i>
+                                                                                                        </div>
+                                                    <div class="col d-flex flex-column justify-content-center pl-lg-0 pl-xl-3">
+                                                        <div class="row">
+                                                            <div class="col-xl-8 col-lg-12 col-8">
+                                                                <a href="/members/lead/usr_d80e68ac283ebb" class="stretched-link card-link">
+                                                                    <h3 class="m-0">kv9 kv9</h3>
+                                                                </a>
+                                                                Unassigned                                                        </div>
+                                                            <div class="col-xl-4 col-lg-12 col-4 d-flex flex-column justify-content-center align-items-xl-end align-items-lg-start align-items-end text-nowrap text-black-45">
+                                                                Sep 05                                                        </div>
+                                                        </div>                
+                                                    </div>
+                                                </div>
+                                                                                </div>
+                                </div>
+                            
+                            <!--------------
+                                MY LEADS
+                            --------------->
+                            <div class="row mt-4">
+                                <div class="col-8">
+                                    <h5 class="text-dark mb-0">My Leads</h5>
+                                </div>
+                                <div class="col-4 d-flex justify-content-end">
+                                    <a href="/members/leads#my-leads" id="at-risk-count" class="d-flex align-items-center justify-content-center border border-secondary text-secondary rounded-circle w-20px h-20px">0</a>
+                                </div>
+                            </div>
+                            <hr class="mt-2 mb-3">
+                                                        <p class="font-size-12px text-black-45 text-center my-2 py-5 px-3">
+                                    Leads that are assigned to you will show up here.
+                                </p>
+                            
+                            <!--------------------
+                                NEW MEMBERSHIPS
+                            ---------------------->
+                            <div class="row mt-4">
+                                <div class="col-8">
+                                    <h5 class="text-dark mb-0">New Memberships</h5>
+                                </div>
+                                <div class="col-4 d-flex justify-content-end">
+                                    <a href="/reports/subscription_change" id="at-risk-count" class="d-flex align-items-center justify-content-center border border-secondary text-secondary rounded-circle w-20px h-20px">↗</a>
+                                </div>
+                            </div>
+                            <hr class="mt-2 mb-3">
+                                                        <p class="font-size-12px text-black-45 text-center my-2 py-5 px-3">
+                                    New Members show up here.
+                                </p>
+                            
+    
+                            <!---------------
+                                BIRTHDAYS
+                            ---------------->
+                            <div class="row">
+                                <div class="col-8">
+                                    <h5 class="text-dark mb-0">Birthdays</h5>
+                                </div>
+                                <div class="col-4 d-flex justify-content-end">
+                                    <a href="/reports/birthdays" id="birthday-count" class="d-flex align-items-center justify-content-center border border-secondary text-secondary rounded-circle w-20px h-20px">0</a>
+                                </div>
+                            </div>
+                            <hr class="my-2">
+                                                        <p class="font-size-12px text-black-45 text-center my-2 py-5 px-3">
+                                    This month's birthdays to celebrate.
+                                </p>
+                                
+    
+    
+                            <!-------------------
+                                ANNIVERSARIES
+                            -------------------->
+                            <div class="row">
+                                <div class="col-8">
+                                    <h5 class="text-dark mb-0">Anniversaries</h5>
+                                </div>
+                                <div class="col-4 d-flex justify-content-end">
+                                    <a href="/reports/anniversaries" id="anniversaries-count" class="d-flex align-items-center justify-content-center border border-secondary text-secondary rounded-circle w-20px h-20px">0</a>
+                                </div>
+                            </div>
+                            <hr class="my-2">
+                                                        <p class="font-size-12px text-black-45 text-center my-2 py-5 px-3">
+                                    This month's anniversaries to acknowledge.
+                                </p>
+                                
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+        <div class="col-12 col-lg-3 col-md-6 mb-5">
+            <!-- Calendar Card -->
+            <div class="card">
+                <div class="card-header bg-primary py-5 px-3">
+                    <div class="row">
+                        <div class="col-8">
+                            <h2 class="text-white">Check-Ins</h2>
+                        </div>
+                        <div class="col-4 d-flex justify-content-end">
+                            <a href="/scheduler/index" class="position-absolute btn btn-secondary rounded-circle h-40px w-40px mt-2 d-flex align-items-center justify-content-center p-0" style="z-index: 1;">
+                                <i class="material-icons">add</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- Datepicker Input -->
+                    <div class="form-group">
+                        <label for="my-day-date-picker">Select Date</label>
+                        <input class="form-control" type="text" id="my-day-date-picker" required="" name="start_date" value="Select date" readonly="">
+                    </div>
+                    <hr class="mt-4 mb-4">
+                    <!-- Calendar Events -->
+                    <p class="text-center my-2 py-5 px-3" id="calendar-loader" style="display: none;">
+                        <span class="spinner-border text-primary" role="status"></span>
+                    </p>
+                    <p class="text-black-45 text-center my-2 py-5 px-3" id="no-calendar-events">
+                            No Classes Today
+                        </p>
+                    <ul class="list-unstyled mb-0" id="google-calendar-events"></ul>
+                </div>
+            </div>
+            
         </div>
     </div>
 </div>
-<!-- Gym Class End -->
-
-
-<!-- About Start -->
-<div class="container py-5">
-    <div class="row align-items-center">
-        <div class="col-lg-6">
-            <img class="img-fluid mb-4 mb-lg-0" src="{% static 'img/about.jpg'%}" alt="Image">
-        </div>
-        <div class="col-lg-6">
-            <h2 class="display-4 font-weight-bold mb-4">10 Years Experience</h2>
-            <p>Over 10 years of experience,with dedication and professionalism..</p>
-            <div class="row py-2">
-                <div class="col-sm-6">
-                    <i class="flaticon-barbell display-2 text-primary"></i>
-                    <h4 class="font-weight-bold">Certified GYM Center</h4>
-                    <p>Certified for fitness..</p>
-                </div>
-                <div class="col-sm-6">
-                    <i class="flaticon-medal display-2 text-primary"></i>
-                    <h4 class="font-weight-bold">Award Winning</h4>
-                    <p>Winners of various awards in Albania..</p>
-                </div>
-            </div>
-            <a href="{% url 'subscribe' %}" class="btn btn-lg px-4 btn-outline-primary">Join Now</a>
-        </div>
-    </div>
-</div>
-<!-- About End -->
-
 
 <!-- Features Start -->
 <div class="container-fluid my-5">
@@ -183,6 +414,7 @@
             </div>
         </div>
     </div>
+    
 </div>
 <!-- GYM Feature End -->
 
@@ -795,6 +1027,12 @@
             }
         }
     }
+    document.addEventListener("DOMContentLoaded", function () {
+        flatpickr("#my-day-date-picker", {
+            dateFormat: "Y-m-d", // Set the desired date format
+            allowInput: true,   // Allow manual input of dates
+        });
+    });
 </script>
 
 {% endblock %}
