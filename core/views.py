@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
-from . models import Profile, Product, Order, OrderItem, ClassSchedule, AddUsers
+from . models import Profile, Product, Order, OrderItem, ClassSchedule, AddUsers, StaffMember
 from django.contrib.auth.models import User
 from core.forms import ContactForm, ProfileForm, CustomUserForm, UserUpdateForm
 from django.contrib import messages
@@ -11,7 +11,7 @@ from django.views.generic.base import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.contrib.auth.forms import UserCreationForm
-from .forms import ProductForm
+from .forms import ProductForm, StaffMemberForm, StaffUpdateForm
 
 
 def index(request):
@@ -216,8 +216,6 @@ def cart(request):
     else:
         return render(request, "cart.html")
 
-
-
 @login_required(login_url='/authentication/login/')
 def add_to_cart(request, choice):
     item = get_object_or_404(Product, pk=choice)
@@ -282,7 +280,6 @@ def users(request):
     items = AddUsers.objects.all()
     return render(request, "allusers.html", {"items":items})
 
-
 @login_required(login_url='/authentication/login/')
 def add_user(request):
     if request.method == 'POST':
@@ -317,15 +314,52 @@ def update_user(request, user_id):
     }
     return render(request, 'update_user.html', context)
 
-
 def update_quantity(request, item_id, new_quantity):
     item = get_object_or_404(OrderItem, id=item_id)
     item.quantity = new_quantity
     item.save()
     return JsonResponse({'message': 'Quantity updated successfully'})
 
-
 def remove_product(request, item_id):
     item = get_object_or_404(OrderItem, id=item_id)
     item.delete()
     return JsonResponse({'message': 'Product removed from cart'})
+
+@login_required(login_url='/authentication/login/')
+def staff_member(request):
+    if request.method == 'POST':
+        form = StaffMemberForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'User has been added successfully.')
+            return redirect('allstaff-member')
+    else:
+        form = StaffMemberForm()
+
+    context = {'form': form}
+    return render(request, 'staff_member.html', context)
+
+
+def all_staff(request):
+    items = StaffMember.objects.all()
+    return render(request, "allstaff.html", {"items":items})
+
+def delete_staff(request, user_id):
+    user = get_object_or_404(StaffMember, id=user_id)
+    user.delete()
+    return redirect('allstaff-member')
+
+def update_staff(request, user_id):
+    user = get_object_or_404(StaffMember, id = user_id)
+    if request.method == 'POST':
+        form = StaffUpdateForm(request.POST, request.FILES, instance = user)
+        if form.is_valid():
+            form.save()
+            return redirect('allstaff-member')
+    else:
+        form = StaffUpdateForm(instance = user)
+
+    context = {
+        'form' : form,
+    }
+    return render(request, 'update_user.html', context)

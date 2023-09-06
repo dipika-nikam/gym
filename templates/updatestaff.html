@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<!-- Page Header Start -->
+<div class="container-fluid page-header mb-5">
+    <div class="d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5" style="min-height: 100px">
+        <h4 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase font-weight-bold">Edit Staff Member</h4>
+    </div>
+</div>
+
+<!-- Page Header End -->
+
+<div class="container col-md-4">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            {% for field in form.visible_fields %}
+            <div class="mb-3">
+                {{ field.errors }}
+                {{ field.label_tag }} {% render_field field class+="form-control" %}
+                {% if field.help_text %}
+                <small class="text-muted">{{ field.help_text|safe }}</small>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </fieldset>
+
+        <div class="row">
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary btn-block">Update</button>
+            </div>
+            <div class="col-md-6">
+                <a href="{% url 'allstaff-member' %}" class="btn btn-secondary btn-block">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
