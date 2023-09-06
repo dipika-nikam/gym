@@ -1,5 +1,5 @@
 from django.contrib import admin
-from . models import Profile, Contact, Product, Order, OrderItem, ClassSchedule, AddUsers,Lead
+from . models import Profile, Contact, Product, Order, OrderItem, ClassSchedule, AddUsers ,Lead
 
 admin.site.register(Profile)
 admin.site.register(Contact)

@@ -30,9 +30,9 @@ class UserUpdateForm(forms.ModelForm):
         model = AddUsers
         fields = ['name', 'email', 'phone', 'profile', 'assigned_to', 'refered_by']
 
-class Leads(forms.ModelForm):
+class LeadForm(forms.ModelForm):
     class Meta:
-        models = Lead
+        model = Lead
         fields = ['status', 'email', 'name', 'birthday', 'postal_code', 'mobile_no', 'objectives', 'refered_by', 'notes']
 
 class StaffMemberForm(forms.ModelForm):

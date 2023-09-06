@@ -210,6 +210,8 @@ class Lead(models.Model):
     status = models.CharField(max_length = 50 , choices=STATUS)
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=50)
+    entry_date = models.DateField(auto_now_add=True)
+    last_activity = models.DateField(auto_now=True)
     birthday = models.CharField(max_length=15)
     postal_code = models.IntegerField()
     mobile_no = models.CharField(max_length=15)

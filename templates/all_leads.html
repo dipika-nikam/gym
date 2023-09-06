@@ -1,0 +1,76 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="container-fluid page-header mb-5">
+    <div class="d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5" style="min-height: 100px">
+        <h4 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase font-weight-bold">Leads</h4>
+    </div>
+</div>
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-md-12 text-right">
+            <a href="{% url 'add_lead' %}" class="btn btn-primary">Create New Lead</a>
+        </div>
+    </div>
+    {% for item in items %}
+    <!-- <div class="alert alert-success" role="alert">{{ item }}</div> -->
+    {% endfor %}
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <!-- <th>ID</th> -->
+                    <th>Name</th>
+                    <th>Entry Date</th>
+                    <th>Last activity</th>
+                    <th>Assigned To</th>
+                    <th>Check-Ins</th>
+                    <th>Status</th>
+                    <!-- <th>Delete</th> -->
+                    <th>Update</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %} {% if not item.is_superuser %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.entry_date }}</td>
+                    <td>{{ item.last_activity }}</td>
+                    <!-- <td>{{ item.assigned_to }}</td> -->
+                    <td>{{ request.user }}</td>
+                    <td>{{ item.refered_by }}</td>
+                    <td>{{ item.status }}</td>
+                    <!-- <td>
+                        <a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{ item.id }}">Delete</a>
+                    </td> -->
+                    <td>
+                        <a href="{% url 'update-user' item.id %}" class="btn btn-secondary">Update</a>
+                    </td>
+                </tr>
+                <!-- Modal -->
+                <div class="modal fade" id="deleteModal{{ item.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure you want to delete {{ item.name }}?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <form method="post" action="{% url 'delete-user' item.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %} {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

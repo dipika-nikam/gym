@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
-from . models import Profile, Product, Order, OrderItem, ClassSchedule, AddUsers, StaffMember
+from . models import Profile, Product, Order, OrderItem, ClassSchedule, AddUsers, StaffMember, Lead
 from django.contrib.auth.models import User
-from core.forms import ContactForm, ProfileForm, CustomUserForm, UserUpdateForm
+from core.forms import ContactForm, ProfileForm, CustomUserForm, UserUpdateForm, LeadForm, StaffMemberForm
 from django.contrib import messages
 from django.conf import settings
 from django.http.response import JsonResponse
@@ -324,6 +324,23 @@ def remove_product(request, item_id):
     item = get_object_or_404(OrderItem, id=item_id)
     item.delete()
     return JsonResponse({'message': 'Product removed from cart'})
+
+def all_leads(request):
+    items = Lead.objects.all()
+    return render(request, "all_leads.html", {"items":items})
+
+def add_lead(request):
+    if request.method == 'POST':
+        form = LeadForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Lead has been added successfully.')
+            return redirect('all_leads')
+    else:
+        form = LeadForm()
+
+    context = {'form': form}
+    return render(request, 'add_lead.html', context)
 
 @login_required(login_url='/authentication/login/')
 def staff_member(request):
