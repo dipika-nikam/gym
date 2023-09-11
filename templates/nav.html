@@ -12,7 +12,8 @@
                 <a href="{% url 'index' %}" class="nav-item nav-link active">Home</a>
                 <!-- <a href="{% url 'classes' %}" class="nav-item nav-link">Classes</a> -->
                 <!-- <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a> -->
-                <a href="{% url 'products' %}" class="nav-item nav-link">Merchandise</a> {% if user.is_authenticated %} {% if user.is_superuser %}
+                <!-- <a href="{% url 'products' %}" class="nav-item nav-link">Merchandise</a>  -->
+                {% if user.is_authenticated %} {% if user.is_superuser %}
                 <!-- <a href="{% url 'all-users' %}" class="nav-link dropdown-toggle">People</a> -->
                 {% endif %}
                 <li class="nav-item dropdown">

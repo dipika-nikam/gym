@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
 from . models import Profile, Product, Order, OrderItem, ClassSchedule, AddUsers, StaffMember, Lead
 from django.contrib.auth.models import User
-from core.forms import ContactForm, ProfileForm, CustomUserForm, UserUpdateForm, LeadForm, StaffMemberForm
+from core.forms import ContactForm, ProfileForm, CustomUserForm, UserUpdateForm, LeadForm, StaffMemberForm, UpdateLeadForm
 from django.contrib import messages
 from django.conf import settings
 from django.http.response import JsonResponse
@@ -341,6 +341,22 @@ def add_lead(request):
 
     context = {'form': form}
     return render(request, 'add_lead.html', context)
+
+def update_lead(request, lead_id):
+    user = get_object_or_404(Lead, id = lead_id)
+    if request.method == 'POST':
+        form = UpdateLeadForm(request.POST, request.FILES, instance = user)
+        if form.is_valid():
+            form.save()
+            return redirect('all_leads')
+    else:
+        form = UpdateLeadForm(instance = user)
+
+    context = {
+        'form' : form,
+    }
+    return render(request, 'update_lead.html', context)
+
 
 @login_required(login_url='/authentication/login/')
 def staff_member(request):

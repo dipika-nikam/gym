@@ -35,6 +35,11 @@ class LeadForm(forms.ModelForm):
         model = Lead
         fields = ['status', 'email', 'name', 'birthday', 'postal_code', 'mobile_no', 'objectives', 'refered_by', 'notes']
 
+class UpdateLeadForm(forms.ModelForm):
+    class Meta:
+        model = Lead
+        fields = ['status', 'email', 'name', 'birthday', 'postal_code', 'mobile_no', 'objectives', 'refered_by', 'notes']
+
 class StaffMemberForm(forms.ModelForm):
     class Meta:
         model = StaffMember

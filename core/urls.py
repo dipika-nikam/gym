@@ -33,4 +33,5 @@ urlpatterns = [
     path('update-staff/<int:user_id>/', views.update_staff, name='update-staff'),
     path('all_leads/', views.all_leads, name = 'all_leads'),
     path('add_lead/', views.add_lead, name = "add_lead"),
+    path('update_lead/<int:lead_id>/', views.update_lead, name = "update_lead"),
 ]
