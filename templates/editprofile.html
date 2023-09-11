@@ -1,4 +1,8 @@
-{% extends "base.html" %} {% load static %} {% load widget_tweaks %} {% block content %}
+{% extends "base.html" %} 
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
 <!-- Page Header Start -->
 <div class="container-fluid page-header mb-5">
     <div class="d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5" style="min-height: 100px">
@@ -13,33 +17,37 @@
         <div class="text-center">
             <label for="id_profile">
                 <div id="profile-container" style="position: relative; display: inline-block;">
-                    <img id="profile-preview" src="{{ user.profile.profile_pic.url }}" alt="Profile Image" class="img-thumbnail mb-3 rounded-circle" style="max-width: 200px; max-height: 200px; cursor: pointer;">
+                    <!-- Profile Photo Preview -->
+                    <img id="profile-preview" src="{% if user.profile.profile_pic %}{{ user.profile.profile_pic.url }}{% else %}{% static 'path/to/default_profile_photo.jpg' %}{% endif %}" alt="Profile Image" class="img-thumbnail mb-3 rounded-circle" style="max-width: 200px; max-height: 200px; cursor: pointer;">                    
+                    <!-- Change Photo Button -->
                     <div id="change-photo-btn" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: none; text-align: center;">
                         <label for="id_profile" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; cursor: pointer;">
                             Change Photo
                         </label>
+                    </div>
+                </div>
+            </label>
         </div>
-</div>
-</label>
-<input type="file" id="id_profile" name="profile_pic" style="display: none;">
-</div>
-<fieldset class="form-group">
-    {% for field in form.visible_fields %} {% if field.name != 'profile_pic' %}
-    <div class="mb-3">
-        {{ field.errors }} {{ field.label_tag }} {% render_field field class+="form-control" %} {% if field.help_text %}
-        <small class="text-muted">{{ field.help_text|safe }}</small> {% endif %}
+        <input type="file" id="id_profile" name="profile_pic" style="display: none;">
+    <fieldset class="form-group">
+        {% for field in form.visible_fields %} 
+        {% if field.name != 'profile_pic' %}
+        <div class="mb-3">
+            {{ field.errors }} {{ field.label_tag }} {% render_field field class+="form-control" %} {% if field.help_text %}
+            <small class="text-muted">{{ field.help_text|safe }}</small> {% endif %}
+        </div>
+        {% endif %}
+        {% endfor %}
+    </fieldset>
+    <div class="row">
+        <div class="col-md-6">
+            <button type="submit" class="btn btn-primary btn-block">Update</button>
+        </div>
+        <div class="col-md-6">
+            <a href="{% url 'profile' %}" class="btn btn-secondary btn-block">Cancel</a>
+        </div>
     </div>
-    {% endif %} {% endfor %}
-</fieldset>
-<div class="row">
-    <div class="col-md-6">
-        <button type="submit" class="btn btn-primary btn-block">Update</button>
-    </div>
-    <div class="col-md-6">
-        <a href="{% url 'profile' %}" class="btn btn-secondary btn-block">Cancel</a>
-    </div>
-</div>
-</form>
+    </form>
 </div>
 <script>
     document.getElementById("id_profile").addEventListener("change", function() {
