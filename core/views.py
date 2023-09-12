@@ -403,3 +403,6 @@ def update_staff(request, user_id):
 
 def migation_assistant(request):
     return render(request, "migration_assistant.html")
+
+def import_members(request):
+    return render(request, 'import_members.html')

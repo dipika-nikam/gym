@@ -1,0 +1,2 @@
+first_name,last_name,email,member_id,dob,gender,address_1,address_2,city,state,postal_code,mobile_phone,member_since,status,is_admin,is_coach
+Mark,Doe,mark@doe.com,0,07/04/1985,male,200 West Lake St.,Unit 12,Torrance,CA,90505,3109890909,1/1/2010,active,FALSE,FALSE

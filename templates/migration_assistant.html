@@ -1,122 +1,120 @@
-{% extends "base.html" %}
-{% load static %}
-{% load widget_tweaks %}
-
-{% block content %}
-    <!-- Page Header Start -->
-    <div class="container-fluid page-header mb-5">
-        <div class="d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5" style="min-height: 100px">
-            <h4 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase font-weight-bold">Migration Assistant</h4>
-        </div>
+{% extends "base.html" %} {% load static %} {% load widget_tweaks %} {% block content %}
+<!-- Page Header Start -->
+<div class="container-fluid page-header mb-5">
+    <div class="d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5" style="min-height: 100px">
+        <h4 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase font-weight-bold">Migration Assistant</h4>
     </div>
-    <!-- Page Header End -->
+</div>
+<!-- Page Header End -->
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="alert alert-danger">
-                    <strong>Bank Connection Required</strong>
-                    In order to start accepting new credit cards in this migration, you need to have your bank connected.
-                    <a href="/settings/bank">Fix this now</a>.
-                </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="alert alert-danger">
+                <strong>Bank Connection Required</strong> In order to start accepting new credit cards in this migration, you need to have your bank connected.
+                <a href="/settings/bank">Fix this now</a>.
+            </div>
 
-                <div class="card-body" style="width: 103%;">
-                    <div class="row">
-                        <div class="col-md-4 mb-4">
-                            <div class="card custom-bg-color custom-border">
-                                <div class="card-body">
-                                    <h5 class="card-title">Step 1</h5>
-                                    <h3>0</h3>
-                                    <p class="card-text">People to Migrate</p>
-                                    <p class="card-text">Upload a CSV file to import your members' basic information.</p>
-                                    <div class="text-center">
-                                        <a href="/migration/import" class="btn btn-primary btn-sm">
+            <div class="card-body" style="width: 103%;">
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card custom-bg-color custom-border">
+                            <div class="card-body">
+                                <h5 class="card-title">Step 1</h5>
+                                <h3>0</h3>
+                                <p class="card-text">People to Migrate</p>
+                                <p class="card-text">Upload a CSV file to import your members' basic information.</p>
+                                <div class="text-center">
+                                    <a href="{% url 'import_members' %}" class="btn btn-primary btn-sm">
                                             Go to step 1
                                             <i class="cta-arrow pp-icon pp-icons-arrow-right-2"></i>
                                         </a>
-                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 mb-4">
-                            <div class="card custom-bg-color custom-border">
-                                <div class="card-body">
-                                    <h5 class="card-title">Step 2</h5>
-                                    <h3>0/0</h3>
-                                    <p class="card-text">Billing Info Complete</p>
-                                    <p class="card-text">Request billing information from your imported members.</p>
-                                    <div class="text-center">
-                                        <a href="/migration/billing" class="btn btn-primary btn-sm">
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card custom-bg-color custom-border">
+                            <div class="card-body">
+                                <h5 class="card-title">Step 2</h5>
+                                <h3>0/0</h3>
+                                <p class="card-text">Billing Info Complete</p>
+                                <p class="card-text">Request billing information from your imported members.</p>
+                                <div class="text-center">
+                                    <a href="/migration/billing" class="btn btn-primary btn-sm">
                                             Go to step 2
                                             <i class="cta-arrow pp-icon pp-icons-arrow-right-2"></i>
                                         </a>
-                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 mb-4">
-                            <div class="card custom-bg-color custom-border">
-                                <div class="card-body">
-                                    <h5 class="card-title">Step 3</h5>
-                                    <h3>0/0</h3>
-                                    <p class="card-text">Plans Assigned</p>
-                                    <p class="card-text">Assign plans, discounts, and start/end dates to all members.</p>
-                                    <div class="text-center">
-                                        <a href="/migration/plans" class="btn btn-primary btn-sm">
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card custom-bg-color custom-border">
+                            <div class="card-body">
+                                <h5 class="card-title">Step 3</h5>
+                                <h3>0/0</h3>
+                                <p class="card-text">Plans Assigned</p>
+                                <p class="card-text">Assign plans, discounts, and start/end dates to all members.</p>
+                                <div class="text-center">
+                                    <a href="/migration/plans" class="btn btn-primary btn-sm">
                                             Go to step 3
                                             <i class="cta-arrow pp-icon pp-icons-arrow-right-2"></i>
                                         </a>
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4" id="right-rail">
-                <section id="right-rail-header" style="background-color: #f2f2f2; padding: 20px;">
-                    <div class="data-group right-rail-title">Step 1</div>
-                    <div class="data-group right-rail-description">Use our template to quickly import your members into PushPress.</div>
-                    <div class="collapse" id="right-rail-additional-data">
-                        <!-- Additional data here if needed -->
-                    </div>
-                    <br style="height: 10px; color: #000;">
-                    <div class="right-rail-actions mt-3">
-                        <a href="/migration/import">
+        </div>
+        <div class="col-md-4" id="right-rail">
+            <section id="right-rail-header" style="background-color: #f2f2f2; padding: 20px;">
+                <div class="data-group right-rail-title">Step 1</div>
+                <div class="data-group right-rail-description">Use our template to quickly import your members into PushPress.</div>
+                <div class="collapse" id="right-rail-additional-data">
+                    <!-- Additional data here if needed -->
+                </div>
+                <br style="height: 10px; color: #000;">
+                <div class="right-rail-actions mt-3">
+                    <a href="/migration/import">
                             Go to step 1
                             <i class="cta-arrow pp-icon pp-icons-arrow-right-2"></i>
                         </a>
-                    </div>
-                    <hr style="height: 10px; color: #000;">
-                    <div class="right-rail-actions">
-                        <a href="/migration/billing">
+                </div>
+                <hr style="height: 10px; color: #000;">
+                <div class="right-rail-actions">
+                    <a href="/migration/billing">
                             Go to step 2
                             <i class="cta-arrow pp-icon pp-icons-arrow-right-2"></i>
                         </a>
-                    </div>
-                    <hr style="height: 10px; color: #000;">
-                    <div class="right-rail-actions">
-                        <a href="/migration/plans">
+                </div>
+                <hr style="height: 10px; color: #000;">
+                <div class="right-rail-actions">
+                    <a href="/migration/plans">
                             Go to step 3
                             <i class="cta-arrow pp-icon pp-icons-arrow-right-2"></i>
                         </a>
-                    </div>
-                    <br style="height: 10px; color: #000;">
-                </section>
-            </div>
-        </div><!-- row -->
+                </div>
+                <br style="height: 10px; color: #000;">
+            </section>
+        </div>
     </div>
-    <style>
-        .custom-bg-color {
-            background-color: #FFFADD;
-        }
-        
-        .custom-border {
-            border: 1px solid #000; /* Add your desired border style here */
-        }
-        
-        .card {
-            height: 100%; /* Ensure all cards have the same height */
-        }
-    </style>
+    <!-- row -->
+</div>
+<style>
+    .custom-bg-color {
+        background-color: #FFFADD;
+    }
+
+    .custom-border {
+        border: 1px solid #000;
+        /* Add your desired border style here */
+    }
+
+    .card {
+        height: 100%;
+        /* Ensure all cards have the same height */
+    }
+</style>
 {% endblock %}

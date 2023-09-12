@@ -32,8 +32,9 @@ urlpatterns = [
     path('delete-staff/<int:user_id>/', views.delete_staff, name='delete-staff'),
     path('update-staff/<int:user_id>/', views.update_staff, name='update-staff'),
     path('all_leads/', views.all_leads, name = 'all_leads'),
-    path('migrate/', views.migation_assistant, name = "migation_assistant"),
     path('add_lead/', views.add_lead, name = "add_lead"),
     path('update_lead/<int:lead_id>/', views.update_lead, name = "update_lead"),
     path('delete_lead/<int:lead_id>/', views.delete_lead, name = "delete_lead"),
+    path('migrate/', views.migation_assistant, name = "migation_assistant"),
+    path('migrate/import_members', views.import_members, name = "import_members"),
 ]
