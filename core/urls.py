@@ -35,4 +35,5 @@ urlpatterns = [
     path('migrate/', views.migation_assistant, name = "migation_assistant"),
     path('add_lead/', views.add_lead, name = "add_lead"),
     path('update_lead/<int:lead_id>/', views.update_lead, name = "update_lead"),
+    path('delete_lead/<int:lead_id>/', views.delete_lead, name = "delete_lead"),
 ]

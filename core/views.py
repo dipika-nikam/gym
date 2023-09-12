@@ -357,6 +357,10 @@ def update_lead(request, lead_id):
     }
     return render(request, 'update_lead.html', context)
 
+def delete_lead(request, lead_id):
+    lead = get_object_or_404(Lead, id=lead_id)
+    lead.delete()
+    return redirect('all_leads')
 
 @login_required(login_url='/authentication/login/')
 def staff_member(request):
