@@ -396,3 +396,6 @@ def update_staff(request, user_id):
         'form' : form,
     }
     return render(request, 'update_user.html', context)
+
+def migation_assistant(request):
+    return render(request, "migration_assistant.html")
